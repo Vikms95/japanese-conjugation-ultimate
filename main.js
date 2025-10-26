@@ -1,7 +1,7 @@
 // since the weights are mostly only used to make things repeat after x amount of rounds, they are overkill
 // would be less work to just wait x rounds and immeditely show what you missed, without updating any weights.
 "use strict";
-import { bind, isHiragana, isJapanese } from "wanakana";
+import * as wanakana from "./node_modules/wanakana/esm/index.js";
 import {
   applyAllSettingsFilterWords,
   applyNonConjugationSettings,
@@ -906,7 +906,7 @@ function getAllConjugations(wordJSON) {
   validBaseWordSpellings = [
     validBaseWordSpellings[0]
       .split("")
-      .filter((letter) => isHiragana(letter))
+      .filter((letter) => wanakana.isHiragana(letter))
       .join(""),
     validBaseWordSpellings[1],
   ];
@@ -1269,7 +1269,7 @@ function initApp() {
 class ConjugationApp {
   constructor(words) {
     const mainInput = document.getElementById("main-text-input");
-    bind(mainInput);
+    wanakana.bind(mainInput);
 
     this.initState(words);
 
@@ -1374,7 +1374,7 @@ class ConjugationApp {
           inputValue = inputValue.replace(/。$/, "");
       }
 
-      if (!isJapanese(inputValue)) {
+      if (!wanakana.isJapanese(inputValue)) {
         document.getElementById("input-tooltip").classList.add("tooltip-fade-animation");
         return;
       } else {
